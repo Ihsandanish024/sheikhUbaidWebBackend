@@ -17,6 +17,7 @@ const loginAdmin = async (req, res) => {
 
     if (!admin) {
       return res.status(401).json({ message: "Invalid credentials" });
+      console.log("there is no admin")
     }
 
     const isMatch = await bcrypt.compare(password, admin.password);
@@ -24,12 +25,12 @@ const loginAdmin = async (req, res) => {
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
+      console.log("problem in password")
     }
 
     res.json({
       token: generateToken(admin._id),
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
