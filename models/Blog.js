@@ -7,14 +7,17 @@ const blogSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    status: {
-  type: String,
-  enum: ["draft", "published"],
-  default: "draft",
-},
     content: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+    },
+    image: {
+      type: String,
     },
     author: {
       type: String,

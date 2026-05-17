@@ -2,20 +2,24 @@ const Blog = require("../models/Blog.js");
 
 // CREATE blog 
  const createBlog = async (req, res) => {
-  const {title,content,status} = req.body;
-  try {
+  const { title, content, status } = req.body;
 
+  if (!title || !content) {
+    return res.status(400).json({ message: "Title and content are required" });
+  }
+
+  try {
     const blog = await Blog.create({
       title,
       content,
-      status:status||"draft",
+      status: status || "draft",
+      image: req.file ? req.file.path : undefined,
     });
 
     res.status(201).json(blog);
   } catch (error) {
-    console.log(error)
-    res.status(400).json({ message:error.message })
-    console.log("this si an error in create blog");
+    console.log(error);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -23,20 +27,27 @@ const Blog = require("../models/Blog.js");
 
 // UPDATE
 const updateBlog = async (req, res) => {
+  try {
+    const { title, content, status } = req.body;
+    const updateData = {};
 
+    if (title !== undefined) updateData.title = title;
+    if (content !== undefined) updateData.content = content;
+    if (status !== undefined) updateData.status = status;
+    if (req.file) updateData.image = req.file.path;
 
-try{const {title,content,status} = req.body;
+    const blog = await Blog.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
 
-  const blog = await Blog.findByIdAndUpdate(
-    req.params.id,
-   {title,content,status},
-    { new: true }
-  );
-  res.json(blog);
-  
-} catch (error){
-res.status(500).json({message:"ubdate failed"})
-}
+    if (!blog) return res.status(404).json({ message: "Blog not found" });
+
+    res.json(blog);
+  } catch (error) {
+    res.status(500).json({ message: "Update failed" });
+  }
 };
 
 
