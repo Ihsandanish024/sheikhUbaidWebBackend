@@ -5,7 +5,7 @@ const cors = require("cors");
 const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes")
 const blogRoutes = require("./routes/blogRoutes")
-const portfolioRoutes = require("./routes/portfolioRoutes")
+// const portfolioRoutes = require("./routes/portfolioRoutes")
 require("dotenv").config()
 const connectDB = require("./config/db");
 
@@ -25,7 +25,7 @@ connectDB();
 //routes
 app.use("/api/blogs",blogRoutes);
 app.use("/api/users",userRoutes)
-app.use("/api/portfolio",portfolioRoutes)
+// app.use("/api/portfolio",portfolioRoutes)
 
 // Test route
 app.get("/", (req, res) => {
