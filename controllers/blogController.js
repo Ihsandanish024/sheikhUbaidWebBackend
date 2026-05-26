@@ -71,7 +71,7 @@ const updateBlog = async (req, res) => {
     const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).json({ message: "Blog not found" });
     res.json(blog)
-    console.log("blog get api is working");
+    console.log("get soigle blog api is not working");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
